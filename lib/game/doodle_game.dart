@@ -15,6 +15,7 @@ class DoodleGame extends FlameGame
 
   Function(int)? onScoreUpdate;
   Function()? onGameOver;
+  Function()? onPlayerBounce;
 
   int score = 0;
   double highestY = 700;

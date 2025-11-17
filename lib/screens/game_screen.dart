@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ignite_hop/game/doodle_game.dart';
 import 'package:ignite_hop/providers/game_provider.dart';
+import 'package:ignite_hop/providers/settings_provider.dart';
 import 'package:ignite_hop/theme.dart';
+import 'package:flutter/services.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -29,6 +31,13 @@ class _GameScreenState extends State<GameScreen> {
     game.onGameOver = () {
       context.read<GameProvider>().endGame();
       setState(() => showGameOver = true);
+    };
+
+    game.onPlayerBounce = () {
+      final haptics = context.read<SettingsProvider>().hapticsEnabled;
+      if (haptics) {
+        HapticFeedback.lightImpact();
+      }
     };
   }
 

@@ -2,8 +2,9 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
 import 'package:ignite_hop/game/components/platform.dart';
+import 'package:ignite_hop/game/doodle_game.dart';
 
-class Player extends PositionComponent with CollisionCallbacks {
+class Player extends PositionComponent with CollisionCallbacks, HasGameRef<DoodleGame> {
   static const double gravity = 800.0;
   static const double jumpVelocity = -600.0;
   static const double maxFallSpeed = 800.0;
@@ -90,6 +91,9 @@ class Player extends PositionComponent with CollisionCallbacks {
 
       velocity.y = jumpVelocity;
       isJumping = true;
+
+      // Notify game for optional side-effects (e.g., haptics)
+      gameRef.onPlayerBounce?.call();
 
       other.breakPlatform();
     }
