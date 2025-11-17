@@ -23,21 +23,31 @@ class MenuScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(),
-                GameTitle(),
-                SizedBox(height: AppSpacing.xxl),
-                GameIcon(),
-                const Spacer(),
-                HighScoreDisplay(),
-                SizedBox(height: AppSpacing.xl),
-                PlayButton(onPressed: () => context.go('/game')),
-                SizedBox(height: AppSpacing.xxl),
-              ],
-            ),
+          child: Stack(
+            children: [
+              // Settings button
+              Positioned(
+                top: AppSpacing.lg,
+                right: AppSpacing.lg,
+                child: _SettingsButton(),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    GameTitle(),
+                    SizedBox(height: AppSpacing.xxl),
+                    GameIcon(),
+                    const Spacer(),
+                    HighScoreDisplay(),
+                    SizedBox(height: AppSpacing.xl),
+                    PlayButton(onPressed: () => context.go('/game')),
+                    SizedBox(height: AppSpacing.xxl),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -216,6 +226,29 @@ class PlayButton extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return GestureDetector(
+      onTap: () => context.go('/settings'),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: cs.onPrimary.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1.5),
+        ),
+        child: Icon(
+          Icons.settings_rounded,
+          color: Colors.white,
+          size: 24,
         ),
       ),
     );

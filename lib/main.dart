@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ignite_hop/theme.dart';
 import 'package:ignite_hop/providers/game_provider.dart';
+import 'package:ignite_hop/providers/settings_provider.dart';
 import 'package:ignite_hop/screens/menu_screen.dart';
 import 'package:ignite_hop/screens/game_screen.dart';
+import 'package:ignite_hop/screens/settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +21,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => GameProvider()..loadHighScore(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SettingsProvider()..load(),
         ),
       ],
       child: MaterialApp.router(
@@ -41,6 +46,13 @@ class MyApp extends StatelessWidget {
               name: 'game',
               pageBuilder: (context, state) => NoTransitionPage(
                 child: const GameScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/settings',
+              name: 'settings',
+              pageBuilder: (context, state) => NoTransitionPage(
+                child: const SettingsScreen(),
               ),
             ),
           ],
